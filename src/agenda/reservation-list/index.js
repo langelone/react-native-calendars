@@ -157,20 +157,23 @@ class ReactComp extends Component {
     }
     let reservations = [];
     if (this.state.reservations && this.state.reservations.length) {
-      const iterator = this.state.reservations[0].day.clone();
+      // const iterator = this.state.reservations[0].day.clone();
+      const iterator = new XDate('2020', '07', '20')
+
       while (iterator.getTime() < props.selectedDay.getTime()) {
         const res = this.getReservationsForDay(iterator, props);
         if (!res) {
           reservations = [];
           break;
         } else {
-          reservations = reservations.concat(res);
+          // reservations = reservations.concat(res);
         }
         iterator.addDays(1);
       }
     }
-    const scrollPosition = reservations.length;
-    const iterator = props.selectedDay.clone();
+    
+    // const iterator = props.selectedDay.clone();
+    const iterator = new XDate('2020', '07', '20')
     for (let i = 0; i < 31; i++) {
       const res = this.getReservationsForDay(iterator, props);
       if (res) {
@@ -179,6 +182,11 @@ class ReactComp extends Component {
       iterator.addDays(1);
     }
 
+    const reservationsFil = reservations.filter(function(item) {
+        return props.selectedDay >= item.day
+      }
+    );
+    const scrollPosition = reservationsFil.length - 1
     return {reservations, scrollPosition};
   }
 
