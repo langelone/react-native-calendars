@@ -329,6 +329,10 @@ export default class AgendaView extends Component {
     }
 
     const key = this.state.selectedDay.toString('yyyy-MM-dd');
+ 
+    if (this.calendar) {
+      this.calendar.scrollToDay(this.state.selectedDay, this.calendarOffset(), true);
+    }
     return {...markings, [key]: {...(markings[key] || {}), ...{selected: true}}};
   }
 
